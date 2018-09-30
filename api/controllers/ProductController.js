@@ -14,6 +14,7 @@ module.exports = {
 
 var EXCHANGES  = ['BNB','BTX','BFX'];
 
+/** Get the common products  across exchanges*/
 function getCommonProducts (req,res){
 	async.map(EXCHANGES , function(exchange, callback){
 		CryptoService.getProducts({
@@ -24,7 +25,16 @@ function getCommonProducts (req,res){
 			res.serverError(new Error(err));
 			return;
 		}
-		var commonProducts = _.map(_.intersectionBy(...allProducts, 'id'), 'id'); //Find the intersection and return the array of unqiue products
-		res.send(commonProducts);
+		var commonProducts = _.map(_.intersectionBy(...allProducts, 'id'), function(product){
+			return {
+				"name"  : product.id,
+				"value" : product.id,
+				"text"  : product.id
+			}
+		}); //Find the intersection and return the array of unqiue products
+		res.send({
+			success : true,
+			results : commonProducts
+		});
 	})
 }
