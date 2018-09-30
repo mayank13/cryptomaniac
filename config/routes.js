@@ -36,7 +36,9 @@ module.exports.routes = {
     view: 'homepage'
   },
 
-  '/products' : 'ProductController.getCommonProducts'
+  '/products' : 'ProductController.getCommonProducts',
+  '/products/:productId/prices' : 'ProductController.getProductPrices'
+
   
 
   /***************************************************************************

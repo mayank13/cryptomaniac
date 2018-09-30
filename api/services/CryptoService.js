@@ -6,14 +6,17 @@ module.exports = {
 
 }
 
+/** Get products for a particular exchange */
 function getProducts (payload,callback){
 	moneedaRequest(`api/exchanges/${payload.exchange}/products`, callback);
 }
 
 function getPrice (payload,callback){
-	moneedaRequest(`api/exchanges/${payload.exchange}/ticker`, callback);
+    var productId = payload.productId;
+	moneedaRequest(`api/exchanges/${payload.exchange}/ticker?product=${productId}`, callback);
 }
 
+/** Common helper to get data from Moneeda API */
 function moneedaRequest(api, callback) {
 
     var options = {
