@@ -34,6 +34,7 @@
           <img src="/images/crypto.jpeg" class="ui avatar image">
           Product Name
         </div>
+        <div class="ui centered inline loader"></div>
         <div class="description">
             <div class="ui list">
                 <% _.each(exchanges, function(exchange, idx){ %>
@@ -69,6 +70,7 @@
   }
   
   function getPriceForProduct(productId){
+    $('.ui.loader').addClass('active');
     var settings = {
       "async": true,
       "crossDomain": true,
@@ -81,6 +83,15 @@
       _.each(response, function(obj){
         $("div.item[data-exchange='"+obj.exchange+"'] span").text(obj.price);
       })
+      var max = _.maxBy(response, function(o) { return o.price; });
+      var min = _.minBy(response, function(o) { return o.price; });
+      $("div.item[data-exchange='"+max.exchange+"'] span").css("color",'green');
+      $("div.item[data-exchange='"+min.exchange+"'] span").css("color",'red');
+
+    }).fail(function(){
+        alert("Error getting data");
+    }).always(function(){
+      $('.ui.loader').removeClass('active');
     });
   }
   
