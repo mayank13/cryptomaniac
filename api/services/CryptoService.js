@@ -11,6 +11,7 @@ function getProducts (payload,callback){
 	moneedaRequest(`api/exchanges/${payload.exchange}/products`, callback);
 }
 
+/** Get the price of a product in a particular exchange */
 function getPrice (payload,callback){
     var productId = payload.productId;
 	moneedaRequest(`api/exchanges/${payload.exchange}/ticker?product=${productId}`, callback);
