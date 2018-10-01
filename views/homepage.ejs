@@ -2,6 +2,10 @@
   .masthead {
     height: 100%;
   }
+
+  .ui.text.container{
+    margin-top : 3em;
+  }
 </style>
 
 <!-- Page Contents -->
@@ -23,18 +27,61 @@
       <div class="text"></div>
       <i class="dropdown icon"></i>
     </div>
-    <div class="ui huge primary button">Get Started <i class="right arrow icon"></i></div>
+    
+    <div class="ui fluid card">
+      <div class="content">
+        <div id="product-name" class="header">
+          <img src="/images/crypto.jpeg" class="ui avatar image">
+          Product Name
+        </div>
+        <div class="description">
+            <div class="ui list">
+                <% _.each(exchanges, function(exchange, idx){ %>
+                  <div class="item" data-exchange="<%= exchange %>">
+                    <%= exchange %> : <span></span>
+                  </div>
+                <% }) %>
+            </div>
+          
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>
 
 <script>
-  $('.ui.dropdown')
-  .dropdown({
-    apiSettings: {
-      url: '/products'
-    },
-    filterRemoteData: true
-  })
-;
+  $(document).ready(function () {
+    init();
+  });
+  function init() {
+      $('.ui.dropdown')
+        .dropdown({
+          apiSettings: {
+            url: '/products'
+          },
+          filterRemoteData: true,
+          onChange : function(value){
+            getPriceForProduct(value);
+          } 
+          
+        });
+  }
+  
+  function getPriceForProduct(productId){
+    var settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": "/products/"+productId +"/prices",
+      "method": "GET"
+    }
+
+    $.ajax(settings).done(function (response) {
+      console.log(response);
+      _.each(response, function(obj){
+        $("div.item[data-exchange='"+obj.exchange+"'] span").text(obj.price);
+      })
+    });
+  }
+  
 </script>

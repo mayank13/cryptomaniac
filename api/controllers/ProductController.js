@@ -9,11 +9,18 @@ const async = require('async');
 const _ = require('lodash');
 
 module.exports = {
+	home : home,
 	getCommonProducts : getCommonProducts,
-	getProductPrices : getProductPrices
+	getProductPrices : getProductPrices,
 };
 
 var EXCHANGES  = ['BNB','BTX','BFX'];
+
+function home(req, res){
+	return res.view('homepage', {
+		exchanges : EXCHANGES
+	})
+}
 
 /** Get the common products  across exchanges*/
 function getCommonProducts (req,res){

@@ -32,10 +32,8 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
-    view: 'homepage'
-  },
-
+  
+  '/' : 'ProductController.home',
   '/products' : 'ProductController.getCommonProducts',
   '/products/:productId/prices' : 'ProductController.getProductPrices'
 
