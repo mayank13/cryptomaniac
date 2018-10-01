@@ -3,6 +3,8 @@
 A simple crypto tracker application (backend + frontend) that works
 with Moneeda API.
 
+Demo available at : http://cryptomaniac-env.qaqnm3fssr.ap-southeast-1.elasticbeanstalk.com/
+
 ## Prerequisites
 
 Node environment
